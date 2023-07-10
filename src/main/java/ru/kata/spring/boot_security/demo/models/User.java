@@ -18,7 +18,7 @@ public class User {
 
     private String email;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -72,8 +72,6 @@ public class User {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
-
-
 
     @Override
     public String toString() {

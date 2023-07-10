@@ -10,22 +10,20 @@
 <table border="2" style="width:300px">
     <tr>
         <td>id</td>
-        <td>name</td>
-        <td>surname</td>
-        <td>age</td>
+        <td>username</td>
+        <td>email</td>
         <td>actions</td>
 
     </tr>
     <tr th:each="user: ${users}">
         <td th:text="${user.getId()}"/>
-        <td th:text="${user.getName()}"/>
-        <td th:text="${user.getSurname()}"/>
+        <td th:text="${user.getUsername()}"/>
         <td th:text="${user.getEmail()}"/>
         <td>
-            <form th:method="GET" th:action="@{/templates/admin/{id}/edit(id=${user.getId()})}">
+            <form th:method="GET" th:action="@{/admin/{id}/edit(id=${user.getId()})}">
                 <input type="submit" value="edit">
             </form>
-            <form th:method="DELETE" th:action="@{/templates/admin/{id}(id=${user.getId()})}">
+            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
                 <input type="submit" value="delete">
             </form>
         </td>
@@ -35,6 +33,9 @@
 <br>
 <form th:method="GET" th:action="@{/templates/admin/new}">
     <input type="submit" value="create">
+</form>
+<form th:method="GET" th:action="@{/logout}">
+    <input type="submit" value="logout">
 </form>
 </body>
 </html>

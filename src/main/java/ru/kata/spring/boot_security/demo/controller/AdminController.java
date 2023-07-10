@@ -27,6 +27,7 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
+        System.out.println("test");
         return "admin/new";
     }
 

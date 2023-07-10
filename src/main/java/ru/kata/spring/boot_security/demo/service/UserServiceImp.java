@@ -37,6 +37,11 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
 
     @Override
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(User user) {
         userRepository.save(user);

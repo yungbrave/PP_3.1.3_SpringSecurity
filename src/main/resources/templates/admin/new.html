@@ -6,18 +6,14 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/templates/admin}" th:object="${user}">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name"/>
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+    <label for="username">username</label>
+    <input type="text" th:field="*{username}" id="username"/>
     <br>
-    <label for="surname">Surname</label>
-    <input type="text" th:field="*{surname}" id="surname"/>
-    <br>
-    <label for="age">Age</label>
-    <input type="text" th:field="*{email}" id="age"/>
+    <label for="email">email</label>
+    <input type="text" th:field="*{email}" id="email"/>
     <br>
     <input type="submit" value="create"/>
 </form>
-
 </body>
 </html>
