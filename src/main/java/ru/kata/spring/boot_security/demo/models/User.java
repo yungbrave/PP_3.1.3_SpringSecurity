@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
 
 @Entity
@@ -16,6 +17,7 @@ public class User {
 
     private String password;
 
+    @Email
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)

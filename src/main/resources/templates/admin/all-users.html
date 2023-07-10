@@ -13,7 +13,6 @@
         <td>username</td>
         <td>email</td>
         <td>actions</td>
-
     </tr>
     <tr th:each="user: ${users}">
         <td th:text="${user.getId()}"/>
@@ -28,10 +27,9 @@
             </form>
         </td>
     </tr>
-
 </table>
 <br>
-<form th:method="GET" th:action="@{/templates/admin/new}">
+<form th:method="GET" th:action="@{/admin/new}">
     <input type="submit" value="create">
 </form>
 <form th:method="GET" th:action="@{/logout}">
