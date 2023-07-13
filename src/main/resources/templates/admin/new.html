@@ -15,8 +15,21 @@
     <label for="password">password</label>
     <input type="text" th:field="*{password}" id="password"/>
     <br/>
+    <label for="roles">roles</label>
+    <input type="text" th:field="*{roles}" id="roles"/>
+    <br/>
     <input type="submit" value="create"/>
+    <br/>
+<!--    <form th:method="POST" th:action="@{/admin}" th:object="${user}">-->
+<!--        <input type="checkbox" th:field="*{roles}" th:value="ROLE_USER" id="roles"/>-->
+<!--        <label for="roles" th:text="ROLE_USER">User</label>-->
+<!--        <br/>-->
+<!--        <input type="checkbox" th:field="*{roles}" th:value="ROLE_ADMIN"/>-->
+<!--        <label for="roles" th:text="ROLE_ADMIN">Admin</label>-->
+<!--    </form>-->
+
 </form>
+
 <form th:method="GET" th:action="@{/logout}">
     <input type="submit" value="logout">
 </form>
