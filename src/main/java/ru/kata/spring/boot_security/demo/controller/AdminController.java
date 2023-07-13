@@ -1,11 +1,19 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -13,9 +21,12 @@ public class AdminController {
 
     private final UserService userService;
 
+    private final RoleRepository roleRepository;
+
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, @Lazy RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping()
@@ -26,12 +37,30 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        System.out.println("test");
         return "admin/new";
     }
 
+//    @PostMapping
+//    public String create(@ModelAttribute("user") User user) {
+//        userService.save(user);
+//        return "redirect:/admin";
+//    }
+
+
     @PostMapping
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@RequestParam("username") String username,
+                         @RequestParam("password") String password,
+                         @RequestParam("email") String email,
+                         @RequestParam("roles") String roles) {
+        User user = new User();
+        Role role = roleRepository.findByName(roles).orElse(null);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setEmail(email);
+        if (role != null) {
+            user.setRoles(new HashSet<>(Set.of(role)));
+        }
+
         userService.save(user);
         return "redirect:/admin";
     }
@@ -57,3 +86,44 @@ public class AdminController {
         return "redirect:/admin";
     }
 }
+//@PostMapping
+//    public String create(@RequestParam("username") String username,
+//                         @RequestParam("password") String password,
+//                         @RequestParam("email") String email,
+//                         @RequestParam("roles") Set<Role> roles) {
+//        User user = new User();
+//        Role role_admin = new Role("ROLE_ADMIN");
+//        Role role_user = new Role("ROLE_USER");
+//        Set<Role> rolesToBeAdded = new HashSet<>();
+//
+//        Role roleAdminToBeAdded = roleRepository.findByName(roles
+//                        .stream()
+//                        .filter(foundRole -> Objects.equals(foundRole, role_admin))
+//                        .findFirst()
+//                        .get()
+//                        .getName())
+//                .orElse(null);
+//        Role roleUserToBeAdded = roleRepository.findByName(roles
+//                        .stream()
+//                        .filter(foundRole -> Objects.equals(foundRole, role_user))
+//                        .findFirst()
+//                        .get()
+//                        .getName())
+//                .orElse(null);
+//
+//        user.setUsername(username);
+//        user.setPassword(password);
+//        user.setEmail(email);
+//
+//        if (roleAdminToBeAdded != null) {
+//            rolesToBeAdded.add(role_admin);
+//        }
+//
+//        if (roleUserToBeAdded != null) {
+//            rolesToBeAdded.add(role_user);
+//        }
+//        user.setRoles(rolesToBeAdded);
+//
+//        userService.save(user);
+//        return "redirect:/admin";
+//    }
