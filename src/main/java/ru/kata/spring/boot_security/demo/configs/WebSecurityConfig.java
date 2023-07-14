@@ -3,12 +3,14 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.kata.spring.boot_security.demo.converters.RoleConverter;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 
@@ -20,8 +22,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserServiceImp userServiceImp;
 
+
+
     @Autowired
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImp userServiceImp) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImp userServiceImp, RoleConverter roleConverter) {
         this.successUserHandler = successUserHandler;
         this.userServiceImp = userServiceImp;
     }
@@ -40,6 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
